@@ -1,4 +1,4 @@
-package com;
+package com.UserRegistration;
 
 import static org.junit.Assert.assertTrue;
 
