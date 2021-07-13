@@ -1,58 +1,30 @@
 package com.UserRegistration;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRegistration {
-	private final String NAME_PATTERN = "^[A-Z]{1}[a-z]{2,10}$";
-	private final String EMAIL_PATTERN = "^[a-zA-Z0-9]{1,}[[.|+|-]a-zA-Z0-9]*@[a-zA-Z0-9]{1,}((.){1}+)([a-z]{1,3}+)(.[a-z]{2,3})*$";
-	private final String PHONE_NUMBER_PATTERN = "[0-9]{2}[\\s][0-9]{10}$";
-	private final String PASSWORD_PATTERN = ("^(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$");
 
-	public boolean validateFirstName(String firstName) throws UserDefinedException {
+	private static String First_Name = "[A-Z]{1}[a-z]{2,}";
+	private static String Last_Name = "^[A-Z]{1}[a-z]{2,}";
+	private static String Email_Id = "[a-zA-z0-9]+[a-zA-Z0-9-_[+]?]*[.]?[a-zA-Z0-9-_[+]?]+@[a-zA-Z0-9]+([.][a-zA-Z]{2,}){1,2}";
+	private static String Mobile = "([0-9]{2}[ ]|0)?[6-9][0-9]{9}";
+	private static String Password = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=[^$@!#%*?&]*[$#@!%*?&][^$@!#%*?&]*$).{8,}";
 
-		Pattern pattern = Pattern.compile(NAME_PATTERN);
-		Matcher matcher = pattern.matcher(firstName);
-		if (!matcher.matches()) {
-			throw new UserDefinedException("Enter a valid pattern");
+	public IUserRegistration checkFirstName = (userInput) -> Pattern.matches(First_Name, userInput);
+	public IUserRegistration checkLastName = (userInput) -> Pattern.matches(Last_Name, userInput);
+	public IUserRegistration checkEmail = (userInput) -> Pattern.matches(Email_Id, userInput);
+	public IUserRegistration checkMobileNum = (userInput) -> Pattern.matches(Mobile, userInput);
+	public IUserRegistration checkPassword = (userInput) -> Pattern.matches(Password, userInput);
+
+	public void checkException(boolean result) {
+
+		try {
+			if (result == false)
+				throw new UserDefinedException();
+		} catch (UserDefinedException e) {
+			System.out.println("Invalid input");
 		}
-		return matcher.matches();
-	}
 
-	public boolean validateLastName(String lastName) throws UserDefinedException {
-		Pattern pattern = Pattern.compile(NAME_PATTERN);
-		Matcher matcher = pattern.matcher(lastName);
-		if (!matcher.matches()) {
-			throw new UserDefinedException("Enter a valid pattern");
-		}
-		return matcher.matches();
-	}
-
-	public boolean validateEmail(String email) throws UserDefinedException {
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(email);
-		if (!matcher.matches()) {
-			throw new UserDefinedException("Enter a valid pattern");
-		}
-		return matcher.matches();
-	}
-
-	public boolean validatePhoneNumber(String phoneNumber) throws UserDefinedException {
-		Pattern pattern = Pattern.compile(PHONE_NUMBER_PATTERN);
-		Matcher matcher = pattern.matcher(phoneNumber);
-		if (!matcher.matches()) {
-			throw new UserDefinedException("Enter a valid pattern");
-		}
-		return matcher.matches();
-	}
-
-	public boolean validatePassword(String password) throws UserDefinedException {
-		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
-		Matcher matcher = pattern.matcher(password);
-		if (!matcher.matches()) {
-			throw new UserDefinedException("Enter a valid pattern");
-		}
-		return matcher.matches();
 	}
 
 }
